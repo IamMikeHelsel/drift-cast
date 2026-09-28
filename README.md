@@ -2,7 +2,7 @@
 
 A small public feature-request board for [drift](https://drift.lab44.dev).
 
-Intended board address: <https://iammikehelsel.github.io/drift-feedback/>. The board is published only after its maintainer enables GitHub Pages. This directory alone does not establish a live site. GitHub Pages uses GitHub-managed deployment; this project provides no custom Actions workflow.
+Live board: <https://iammikehelsel.github.io/drift-feedback/>. Published and checked anonymously on September 27, 2026. GitHub Pages uses GitHub-managed deployment; this project provides no custom Actions workflow.
 
 ## Public-data boundary
 
