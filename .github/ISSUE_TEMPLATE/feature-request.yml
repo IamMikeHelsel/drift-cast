@@ -1,0 +1,38 @@
+name: Feature request
+description: Suggest something that would make drift more useful for you.
+labels: ["type:feature", "status:new"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing an idea. This request and any comments will be public.
+        Please leave out personal information, account details, private feed addresses, recordings and credentials.
+        For private help, use the support contact at https://drift.lab44.dev/privacy.
+        Search existing requests first; add a 👍 to an existing request’s first post if it describes your idea.
+  - type: textarea
+    id: situation
+    attributes:
+      label: What would you like to do?
+      description: Describe the situation and what is difficult today.
+      placeholder: When I’m listening, I’d like to…
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help?
+      description: Describe your idea and how it would help. A small example is welcome.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Anything else to consider?
+      description: Optional alternatives or context. Please keep it suitable for a public discussion.
+  - type: checkboxes
+    id: public
+    attributes:
+      label: Public request
+      options:
+        - label: I understand that this request is public and have left out sensitive information.
+          required: true

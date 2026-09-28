@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Share an idea for drift, see what others have requested, and add your vote.">
+  <meta name="color-scheme" content="light dark">
+  <title>Ideas for drift</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="board.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#requests">Skip to requests</a>
+  <header class="site-header wrap">
+    <a class="wordmark" href="https://drift.lab44.dev" aria-label="drift home">drift<span> / ideas</span></a>
+    <a class="quiet-link" href="https://drift.lab44.dev/privacy">Private support ↗</a>
+  </header>
+  <main class="wrap">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">A little better, together</p>
+      <h1 id="page-title">What would make<br>drift better for you?</h1>
+      <p class="lede">Share an idea, find a request you care about, or see what’s being considered.</p>
+      <div class="intro-actions">
+        <a class="button primary" href="https://github.com/IamMikeHelsel/drift-feedback/issues/new?template=feature-request.yml">Request a feature <span aria-hidden="true">↗</span></a>
+        <p>Posting and voting require a GitHub account.<br>Reading doesn’t.</p>
+      </div>
+    </section>
+
+    <aside class="public-note">
+      <span class="note-mark" aria-hidden="true">↗</span>
+      <p><strong>This is a public board.</strong> Keep personal information, account details, private feeds, and recordings out of requests. For private help, use <a href="https://drift.lab44.dev/privacy">support</a>.</p>
+    </aside>
+
+    <section class="board" id="requests" aria-labelledby="requests-title">
+      <div class="section-heading">
+        <div><h2 id="requests-title">Feature requests</h2><p>To vote, open a request on GitHub and add 👍 to its first post.</p></div>
+        <button class="button secondary" id="refresh" type="button">Refresh</button>
+      </div>
+      <div class="controls" role="search" aria-label="Find a feature request">
+        <label class="search-field">Search requests<input id="search" type="search" placeholder="An idea or request number" autocomplete="off"></label>
+        <label>Status<select id="status"><option value="all">All statuses</option><option value="new">New</option><option value="considering">Considering</option><option value="planned">Planned</option><option value="in-progress">In progress</option><option value="shipped">Shipped</option><option value="not-planned">Not planned</option><option value="closed">Closed</option><option value="unassigned">Not categorized</option></select></label>
+        <label>Sort by<select id="sort"><option value="votes">Most votes</option><option value="newest">Newest first</option><option value="status">Status</option></select></label>
+      </div>
+      <p class="load-notice" id="load-notice" role="status" aria-live="polite">Loading public requests from GitHub…</p>
+      <p class="result-count" id="result-count" aria-live="polite"></p>
+      <div class="issue-list" id="issue-list" aria-busy="true"></div>
+      <div class="empty-state" id="empty-state" hidden>
+        <h3 id="empty-title">No requests yet</h3>
+        <p id="empty-copy">A useful idea starts with something you’d like to do. Share yours on GitHub.</p>
+      </div>
+      <p class="board-footnote">This view includes requests labelled <code>type:feature</code> among up to 400 recent public issues. Statuses are curated by the maintainer; plans can change. Votes help inform decisions and don’t guarantee a feature or a delivery date.</p>
+      <a class="quiet-link" href="https://github.com/IamMikeHelsel/drift-feedback/issues">View all requests on GitHub ↗</a>
+      <noscript><p class="load-notice">This board needs JavaScript to load requests. You can <a href="https://github.com/IamMikeHelsel/drift-feedback/issues">read and submit requests directly on GitHub</a>.</p></noscript>
+    </section>
+  </main>
+  <footer class="wrap site-footer"><a href="https://drift.lab44.dev">Back to drift ↗</a><span>Public ideas. Thoughtful decisions.</span></footer>
+</body>
+</html>
