@@ -11,6 +11,7 @@ Create these issue labels before accepting submissions:
 | Label | Meaning | Suggested color |
 | --- | --- | --- |
 | `type:feature` | A feature request shown on the board | `6B7280` |
+| `type:bug` | A public bug report shown on the board | `B91C1C` |
 | `status:new` | Awaiting consideration | `6B7280` |
 | `status:considering` | Being evaluated | `6B7280` |
 | `status:planned` | Current intent; no promised date | `4B5563` |
@@ -37,3 +38,7 @@ Check desktop and narrow mobile layouts, keyboard navigation, light/dark appeara
 The browser fetches at most 400 recent public issue records and has a 12-second timeout per page. A request failure keeps already loaded results and explains the limitation. GitHub’s unauthenticated API has rate limits. If the board cannot load, its GitHub link remains the fallback; never add a personal token to client-side JavaScript. The site has no automatic refresh loop or analytics.
 
 Run `node --test tests/board.test.mjs` after changing API or rendering behavior. These synthetic tests do not prove Pages publication or real GitHub account submission/voting.
+
+## Roadmap upkeep
+
+Update [ROADMAP.md](ROADMAP.md) when a public decision changes. Link relevant public requests as they arrive. Write public summaries deliberately; never mirror private issues or in-app reports. Use App Store availability for Shipped, and label private or TestFlight work separately. The bug and feature forms both apply `status:new`; triage them manually.

@@ -34,7 +34,7 @@ export function normalizeIssue(issue) {
   if (!issue || typeof issue !== 'object' || 'pull_request' in issue) return null;
   const url = issueLink(issue.number, issue.html_url);
   const labels = labelNames(issue);
-  if (!url || !labels.includes('type:feature') || typeof issue.title !== 'string') return null;
+  if (!url || !labels.some(label => ['type:feature', 'type:bug'].includes(label)) || typeof issue.title !== 'string') return null;
   const votes = issue.reactions?.['+1'];
   const created = Date.parse(issue.created_at);
   return {

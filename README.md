@@ -1,6 +1,8 @@
-# Ideas for drift
+# Feedback and roadmap for drift
 
-A small public feature-request board for [drift](https://drift.lab44.dev).
+Report bugs, suggest features, and help guide [drift](https://drift.lab44.dev).
+
+[Roadmap](ROADMAP.md) · [Report a bug](https://github.com/IamMikeHelsel/drift-feedback/issues/new?template=bug-report.yml) · [Suggest a feature](https://github.com/IamMikeHelsel/drift-feedback/issues/new?template=feature-request.yml)
 
 Live board: <https://iammikehelsel.github.io/drift-feedback/>. Published and checked anonymously on September 27, 2026. GitHub Pages uses GitHub-managed deployment; this project provides no custom Actions workflow.
 
@@ -16,7 +18,7 @@ Anyone can read and search the board without signing in. Submitting a request, c
 
 - Static HTML, CSS and browser JavaScript, with native system fonts and no dependencies or analytics. The board itself sets no cookies and uses no browser storage; GitHub hosting and service policies apply separately.
 - Reads only public issues from `IamMikeHelsel/drift-feedback` using GitHub’s unauthenticated REST API. No token is requested, stored or embedded.
-- Shows issues carrying `type:feature`, excludes pull requests, and offers title/number search, status filtering, and vote/newest/status sorting.
+- Shows issues carrying `type:feature` or `type:bug`, excludes pull requests, and offers title/number search, status filtering, and vote/newest/status sorting.
 - Fetches at most four pages of 100 public issue records, newest-created first. Pull requests also consume records in this API response, even though the board excludes them. Search and vote sorting apply only to loaded requests. A visible notice explains truncation, partial results, API limits or failures and links to GitHub.
 - Renders API text with DOM text nodes and validates every issue link against this exact repository and a positive numeric issue number. It does not interpret issue HTML or Markdown.
 - Uses explicit status labels. Only a closed issue with the sole explicit `status:shipped` label is shown as **Shipped**. Closed issues without that status appear as **Closed** (or **Not planned** when explicitly labelled). Missing or conflicting statuses on open issues appear as **Not categorized**. An open issue labelled shipped is also not categorized until corrected.

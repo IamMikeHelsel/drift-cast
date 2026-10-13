@@ -19,10 +19,11 @@ test('shipped requires closure and one explicit shipped status; closure alone is
   assert.equal(classifyStatus(['status:unknown']), 'unassigned');
 });
 
-test('only valid public feature issues enter the board', () => {
+test('only valid public feature and bug issues enter the board', () => {
   for (const invalid of [null, raw(1, {pull_request: {}}), raw(1, {labels: []}), raw(1, {title: null}), raw(0), raw(1, {html_url: 'https://example.com'})]) {
     assert.equal(normalizeIssue(invalid), null);
   }
+  assert.equal(normalizeIssue(raw(2, {labels: ['type:bug', 'status:new']})).status, 'new');
   assert.equal(normalizeIssue(raw(1, {reactions: {'+1': -4}, created_at: 'invalid'})).votes, 0);
   assert.equal(normalizeIssue(raw(1, {reactions: {'+1': '100'}})).votes, 0);
 });
