@@ -1,0 +1,28 @@
+name: Lint
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lint-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  biome:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Biome format check
+        run: npx --yes @biomejs/biome@2.5.15 format .
+      - name: Biome lint
+        # TODO: make blocking once existing findings are fixed
+        continue-on-error: true
+        run: npx --yes @biomejs/biome@2.5.15 lint .
