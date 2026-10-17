@@ -3,9 +3,14 @@ export const REPOSITORY_URL = `https://github.com/${REPOSITORY}`;
 export const PAGE_SIZE = 100;
 export const MAX_PAGES = 4;
 export const STATUSES = Object.freeze({
-  new: 'New', considering: 'Considering', planned: 'Planned',
-  'in-progress': 'In progress', shipped: 'Shipped', 'not-planned': 'Not planned',
-  closed: 'Closed', unassigned: 'Not categorized',
+  new: 'New',
+  considering: 'Considering',
+  planned: 'Planned',
+  'in-progress': 'In progress',
+  shipped: 'Shipped',
+  'not-planned': 'Not planned',
+  closed: 'Closed',
+  unassigned: 'Not categorized',
 });
 
 export function issueLink(number, suppliedURL) {
@@ -16,16 +21,18 @@ export function issueLink(number, suppliedURL) {
 
 function labelNames(issue) {
   if (!Array.isArray(issue.labels)) return [];
-  return issue.labels.map(label => typeof label === 'string' ? label : label?.name)
+  return issue.labels
+    .map(label => (typeof label === 'string' ? label : label?.name))
     .filter(label => typeof label === 'string');
 }
 
 export function classifyStatus(labels, state = 'open') {
-  const statuses = [...new Set(labels.filter(label => label.startsWith('status:'))
-    .map(label => label.slice(7)))];
+  const statuses = [...new Set(labels.filter(label => label.startsWith('status:')).map(label => label.slice(7)))];
   // Neither closure nor conflicting/missing labels implies a delivery promise.
-  const status = statuses.length === 1 && Object.hasOwn(STATUSES, statuses[0])
-    && !['unassigned', 'closed'].includes(statuses[0]) ? statuses[0] : 'unassigned';
+  const status =
+    statuses.length === 1 && Object.hasOwn(STATUSES, statuses[0]) && !['unassigned', 'closed'].includes(statuses[0])
+      ? statuses[0]
+      : 'unassigned';
   if (state === 'closed') return status === 'shipped' || status === 'not-planned' ? status : 'closed';
   return status === 'shipped' ? 'unassigned' : status;
 }
@@ -34,26 +41,36 @@ export function normalizeIssue(issue) {
   if (!issue || typeof issue !== 'object' || 'pull_request' in issue) return null;
   const url = issueLink(issue.number, issue.html_url);
   const labels = labelNames(issue);
-  if (!url || !labels.some(label => ['type:feature', 'type:bug'].includes(label)) || typeof issue.title !== 'string') return null;
+  if (!url || !labels.some(label => ['type:feature', 'type:bug'].includes(label)) || typeof issue.title !== 'string')
+    return null;
   const votes = issue.reactions?.['+1'];
   const created = Date.parse(issue.created_at);
   return {
-    number: issue.number, url, title: issue.title, status: classifyStatus(labels, issue.state),
+    number: issue.number,
+    url,
+    title: issue.title,
+    status: classifyStatus(labels, issue.state),
     votes: Number.isSafeInteger(votes) && votes >= 0 ? votes : 0,
     created: Number.isFinite(created) ? created : 0,
     closed: issue.state === 'closed',
   };
 }
 
-export function selectIssues(issues, {search = '', status = 'all', sort = 'votes'} = {}) {
+export function selectIssues(issues, { search = '', status = 'all', sort = 'votes' } = {}) {
   const query = search.trim().toLocaleLowerCase();
-  const selected = issues.filter(issue => (status === 'all' || issue.status === status)
-    && (!query || `${issue.title} #${issue.number}`.toLocaleLowerCase().includes(query)));
+  const selected = issues.filter(
+    issue =>
+      (status === 'all' || issue.status === status) &&
+      (!query || `${issue.title} #${issue.number}`.toLocaleLowerCase().includes(query)),
+  );
   const order = Object.keys(STATUSES);
   return selected.sort((a, b) => {
-    const primary = sort === 'newest' ? b.created - a.created
-      : sort === 'status' ? order.indexOf(a.status) - order.indexOf(b.status)
-      : b.votes - a.votes;
+    const primary =
+      sort === 'newest'
+        ? b.created - a.created
+        : sort === 'status'
+          ? order.indexOf(a.status) - order.indexOf(b.status)
+          : b.votes - a.votes;
     return primary || b.created - a.created || b.number - a.number;
   });
 }
@@ -66,11 +83,17 @@ export async function fetchIssues(fetcher = globalThis.fetch) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 12000);
     try {
-      const response = await fetcher(`https://api.github.com/repos/${REPOSITORY}/issues?state=all&sort=created&direction=desc&per_page=${PAGE_SIZE}&page=${page}`, {
-        headers: {Accept: 'application/vnd.github+json'}, credentials: 'omit',
-        cache: 'no-store', signal: controller.signal,
-      });
-      if (!response.ok) throw new Error(response.status === 403 || response.status === 429 ? 'rate-limit' : 'unavailable');
+      const response = await fetcher(
+        `https://api.github.com/repos/${REPOSITORY}/issues?state=all&sort=created&direction=desc&per_page=${PAGE_SIZE}&page=${page}`,
+        {
+          headers: { Accept: 'application/vnd.github+json' },
+          credentials: 'omit',
+          cache: 'no-store',
+          signal: controller.signal,
+        },
+      );
+      if (!response.ok)
+        throw new Error(response.status === 403 || response.status === 429 ? 'rate-limit' : 'unavailable');
       const data = await response.json();
       if (!Array.isArray(data) || data.length > PAGE_SIZE) throw new Error('unavailable');
       pages += 1;
@@ -82,15 +105,20 @@ export async function fetchIssues(fetcher = globalThis.fetch) {
       const link = response.headers?.get('link');
       // When pagination headers are unavailable, a full page is conservatively incomplete.
       const hasNext = link ? /rel="next"/.test(link) : data.length === PAGE_SIZE;
-      if (!hasNext) return {issues: [...records.values()], scanned, pages, limited: false, error: null};
+      if (!hasNext) return { issues: [...records.values()], scanned, pages, limited: false, error: null };
     } catch (error) {
-      return {issues: [...records.values()], scanned, pages, limited: false,
-        error: error.message === 'rate-limit' ? 'rate-limit' : 'unavailable'};
+      return {
+        issues: [...records.values()],
+        scanned,
+        pages,
+        limited: false,
+        error: error.message === 'rate-limit' ? 'rate-limit' : 'unavailable',
+      };
     } finally {
       clearTimeout(timer);
     }
   }
-  return {issues: [...records.values()], scanned, pages, limited: true, error: null};
+  return { issues: [...records.values()], scanned, pages, limited: true, error: null };
 }
 
 function element(document, tag, className, text) {
@@ -112,13 +140,26 @@ export function renderIssue(issue, document) {
   if (!url) throw new Error('Invalid issue link');
   link.href = url;
   title.append(link);
-  const date = issue.created ? new Intl.DateTimeFormat('en', {month: 'short', day: 'numeric', year: 'numeric'}).format(issue.created) : 'Date unavailable';
-  const meta = element(document, 'p', 'issue-meta', `#${issue.number} · ${date}${issue.closed ? ' · Closed on GitHub' : ''}`);
+  const date = issue.created
+    ? new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' }).format(issue.created)
+    : 'Date unavailable';
+  const meta = element(
+    document,
+    'p',
+    'issue-meta',
+    `#${issue.number} · ${date}${issue.closed ? ' · Closed on GitHub' : ''}`,
+  );
   main.append(status, title, meta);
   const vote = element(document, 'a', 'vote-link');
   vote.href = url;
-  vote.setAttribute('aria-label', `${issue.votes} thumbs-up votes. Open request ${issue.number} to vote on GitHub; sign-in required.`);
-  vote.append(element(document, 'span', 'vote-count', `👍 ${issue.votes}`), element(document, 'span', 'vote-caption', 'Vote on GitHub'));
+  vote.setAttribute(
+    'aria-label',
+    `${issue.votes} thumbs-up votes. Open request ${issue.number} to vote on GitHub; sign-in required.`,
+  );
+  vote.append(
+    element(document, 'span', 'vote-count', `👍 ${issue.votes}`),
+    element(document, 'span', 'vote-caption', 'Vote on GitHub'),
+  );
   card.append(main, vote);
   return card;
 }
@@ -134,10 +175,10 @@ export function mountBoard(document) {
   const status = document.getElementById('status');
   const sort = document.getElementById('sort');
   const refresh = document.getElementById('refresh');
-  let result = {issues: [], error: null, limited: false};
+  let result = { issues: [], error: null, limited: false };
   let loaded = false;
   function draw() {
-    const selected = selectIssues(result.issues, {search: search.value, status: status.value, sort: sort.value});
+    const selected = selectIssues(result.issues, { search: search.value, status: status.value, sort: sort.value });
     list.replaceChildren(...selected.map(issue => renderIssue(issue, document)));
     count.textContent = loaded ? `${selected.length} of ${result.issues.length} loaded requests` : '';
     empty.hidden = !loaded || selected.length > 0;
@@ -161,8 +202,9 @@ export function mountBoard(document) {
       loaded = true;
       notice.textContent = result.error
         ? `${result.error === 'rate-limit' ? 'GitHub’s public API limit was reached.' : 'GitHub couldn’t load all requests.'} ${result.issues.length ? 'Showing the requests loaded so far. ' : ''}Try Refresh later, or view all requests on GitHub below.`
-        : result.limited ? `Showing requests found in the ${result.scanned} most recent public issues. Older requests and their votes may be missing; view all requests on GitHub below.`
-        : 'Loaded from public GitHub issues. Vote counts update when you refresh.';
+        : result.limited
+          ? `Showing requests found in the ${result.scanned} most recent public issues. Older requests and their votes may be missing; view all requests on GitHub below.`
+          : 'Loaded from public GitHub issues. Vote counts update when you refresh.';
       draw();
     } finally {
       refresh.disabled = false;
