@@ -30,7 +30,7 @@ test('only valid public feature and bug issues enter the board', () => {
 
 test('issue links allow only this exact repository and matching positive safe integer', () => {
   assert.equal(issueLink(12, `${REPOSITORY_URL}/issues/12`), `${REPOSITORY_URL}/issues/12`);
-  for (const url of ['javascript:alert(1)', `https://github.com/Other/drift-feedback/issues/12`,
+  for (const url of ['javascript:alert(1)', `https://github.com/Other/drift-cast/issues/12`,
     `${REPOSITORY_URL}/issues/13`, `${REPOSITORY_URL}/issues/12?next=evil`, `${REPOSITORY_URL}/issues/12#evil`,
     `https://github.com.evil.example/${REPOSITORY}/issues/12`, `https://user@github.com/${REPOSITORY}/issues/12`,
     `${REPOSITORY_URL}/issues/012`, `${REPOSITORY_URL}/pull/12`]) assert.equal(issueLink(12, url), null);

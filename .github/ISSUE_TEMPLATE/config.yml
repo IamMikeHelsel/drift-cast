@@ -2,4 +2,10 @@ blank_issues_enabled: false
 contact_links:
   - name: Private or account-specific help
     url: https://drift.lab44.dev/privacy
-    about: Use the support contact on this page. Do not post personal or account details in a public request.
+    about: Email the support contact on this page. Don't post personal or account details in a public request.
+  - name: Report a security or privacy problem
+    url: https://github.com/IamMikeHelsel/drift-cast/blob/main/SECURITY.md
+    about: Report vulnerabilities privately by email, not as a public issue.
+  - name: Get drift on the App Store
+    url: https://apps.apple.com/us/app/drift-cast/id6813979565
+    about: drift is free to download for iPhone and iPad.

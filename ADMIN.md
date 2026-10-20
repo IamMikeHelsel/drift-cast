@@ -1,10 +1,10 @@
 # Maintainer guide
 
-## Publish only this standalone repository
+## Keep this repository standalone
 
-The intended public repository is `IamMikeHelsel/drift-feedback`. Create its history from this directory alone. Do not copy the private application repository, its `.git` directory, issues, internal backlog or private documents into it.
+This is drift's public home, `IamMikeHelsel/drift-cast` (renamed from `drift-feedback` on October 19, 2026; GitHub redirects the old links). It is linked from the App Store listing and drift.lab44.dev. The private application repository stays `IamMikeHelsel/drift`. Never give a public repository that name: agent worktrees push there and the app's owner-feedback links target it. Keep this history independent. Do not copy the private application repository, its `.git` directory, issues, internal backlog or private documents into it.
 
-Review every file, then publish this small standalone project. In repository **Settings → Pages**, choose **Deploy from a branch**, branch **main**, folder **/ (root)**. GitHub Pages supplies its managed build/deployment. This project needs no custom Actions workflow, server, dependency installation, secret or token. Keep the canonical app at <https://drift.lab44.dev> and private-help routing at <https://drift.lab44.dev/privacy>.
+Review every file before pushing. In repository **Settings → Pages**, choose **Deploy from a branch**, branch **main**, folder **/ (root)**. GitHub Pages supplies its managed build/deployment. This project needs no custom Actions workflow, server, dependency installation, secret or token. Keep the canonical app at <https://drift.lab44.dev> and private-help routing at <https://drift.lab44.dev/privacy>.
 
 Create these issue labels before accepting submissions:
 
@@ -42,3 +42,21 @@ Run `node --test tests/board.test.mjs` after changing API or rendering behavior.
 ## Roadmap upkeep
 
 Update [ROADMAP.md](ROADMAP.md) when a public decision changes. Link relevant public requests as they arrive. Write public summaries deliberately; never mirror private issues or in-app reports. Use App Store availability for Shipped, and label private or TestFlight work separately. The bug and feature forms both apply `status:new`; triage them manually.
+
+## How the board works
+
+- Static HTML, CSS and browser JavaScript, with native system fonts and no dependencies or analytics. The board itself sets no cookies and uses no browser storage; GitHub hosting and service policies apply separately.
+- Reads only public issues from `IamMikeHelsel/drift-cast` using GitHub's unauthenticated REST API. No token is requested, stored or embedded.
+- Shows issues carrying `type:feature` or `type:bug`, excludes pull requests, and offers title/number search, status filtering, and vote/newest/status sorting.
+- Fetches at most four pages of 100 public issue records, newest-created first. Pull requests also consume records in this API response, even though the board excludes them. Search and vote sorting apply only to loaded requests. A visible notice explains truncation, partial results, API limits or failures and links to GitHub.
+- Renders API text with DOM text nodes and validates every issue link against this exact repository and a positive numeric issue number. It does not interpret issue HTML or Markdown.
+- Only a closed issue with the sole explicit `status:shipped` label is shown as **Shipped**. Closed issues without that status appear as **Closed** (or **Not planned** when explicitly labelled). Missing or conflicting statuses on open issues appear as **Not categorized**.
+
+`index.html` provides the page, `styles.css` the responsive appearance, and `board.mjs` the public API reader and safe renderer. `tests/board.test.mjs` exercises classification, links, text rendering, filtering and request limits with synthetic fixtures that are never submitted to GitHub. `.nojekyll` selects plain static Pages delivery.
+
+```sh
+node --test tests/board.test.mjs
+python3 -m http.server 8000 --bind 127.0.0.1
+```
+
+Open `http://127.0.0.1:8000` to preview. The preview reads the live public issues.

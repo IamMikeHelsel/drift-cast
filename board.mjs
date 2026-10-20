@@ -1,4 +1,4 @@
-export const REPOSITORY = 'IamMikeHelsel/drift-feedback';
+export const REPOSITORY = 'IamMikeHelsel/drift-cast';
 export const REPOSITORY_URL = `https://github.com/${REPOSITORY}`;
 export const PAGE_SIZE = 100;
 export const MAX_PAGES = 4;

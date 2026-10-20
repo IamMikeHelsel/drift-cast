@@ -15,7 +15,7 @@ This is the public direction for drift. Plans can change; there are no promised 
 
 ## Help guide it
 
-[Report a bug](https://github.com/IamMikeHelsel/drift-feedback/issues/new?template=bug-report.yml) or [suggest a feature](https://github.com/IamMikeHelsel/drift-feedback/issues/new?template=feature-request.yml). Tell us what you are trying to do and what gets in the way. Add a thumbs-up to an existing request when it describes your need.
+[Report a bug](https://github.com/IamMikeHelsel/drift-cast/issues/new?template=bug-report.yml) or [suggest a feature](https://github.com/IamMikeHelsel/drift-cast/issues/new?template=feature-request.yml). Tell us what you are trying to do and what gets in the way. Add a thumbs-up to an existing request when it describes your need.
 
 Votes help set priorities. Reliability, accessibility, and the usefulness of a change matter too. A request marked planned is an intention, not a delivery commitment. Shipped means available to App Store listeners; a private test does not count.
 

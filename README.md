@@ -1,37 +1,50 @@
-# Feedback and roadmap for drift
+# drift
 
-Report bugs, suggest features, and help guide [drift](https://drift.lab44.dev).
+**A little room to listen.** drift is an independent podcast player for iPhone and iPad. Your queue, your pace. Listen without an account, and keep your library on your device.
 
-[Roadmap](ROADMAP.md) · [Report a bug](https://github.com/IamMikeHelsel/drift-feedback/issues/new?template=bug-report.yml) · [Suggest a feature](https://github.com/IamMikeHelsel/drift-feedback/issues/new?template=feature-request.yml)
+[**Download on the App Store ↗**](https://apps.apple.com/us/app/drift-cast/id6813979565) · free to download · iOS and iPadOS 26 or later
 
-Live board: <https://iammikehelsel.github.io/drift-feedback/>. Published and checked anonymously on September 27, 2026. GitHub Pages uses GitHub-managed deployment; this project provides no custom Actions workflow.
+| | |
+| --- | --- |
+| Website | <https://drift.lab44.dev> |
+| Privacy and support | <https://drift.lab44.dev/privacy> |
+| Report a bug | [Open a bug report](https://github.com/IamMikeHelsel/drift-cast/issues/new?template=bug-report.yml) |
+| Suggest a feature | [Open a feature request](https://github.com/IamMikeHelsel/drift-cast/issues/new?template=feature-request.yml) |
+| Roadmap | [ROADMAP.md](ROADMAP.md) |
+| Feedback board | <https://iammikehelsel.github.io/drift-cast/> |
+| Private help | [SUPPORT.md](SUPPORT.md) or email [mike@lab44.dev](mailto:mike@lab44.dev?subject=drift%20support) |
+| Security issues | [SECURITY.md](SECURITY.md) |
 
-## Public-data boundary
+## What drift is for
 
-This is a standalone public project. The drift application source remains private. This repository contains no app source, private history, internal backlog, credentials, analytics, or automatic synchronization with another repository.
+- **Choose what comes next.** Keep the episodes you want, in the order you want to hear them.
+- **Settle into your pace.** Adjust playback speed and choose when the sleep timer ends.
+- **Keep what's yours.** Your library stays on your device, and exports stay free.
 
-Everything posted to this repository—including issue text, comments, names and reactions—is public on GitHub. Do not post personal information, account details, private feed addresses, recordings or credentials. For private or account-specific help, use the support contact on [drift’s privacy/support page](https://drift.lab44.dev/privacy).
+drift is made by [Lab44](https://www.lab44.dev/). The website explains [why it exists](https://drift.lab44.dev/why).
 
-Anyone can read and search the board without signing in. Submitting a request, commenting, or adding a 👍 reaction requires a GitHub account. To vote, open a request and add 👍 to its first post; the board displays that reaction count. It does not count comment reactions as votes.
+## Getting help
 
-## How it works
+For help with your own library, your account or anything private, email [mike@lab44.dev](mailto:mike@lab44.dev?subject=drift%20support). A real person reads every message. The [privacy and support page](https://drift.lab44.dev/privacy) answers common questions about where your library is stored, importing from another app, audiobooks, downloads, account deletion and accessibility.
 
-- Static HTML, CSS and browser JavaScript, with native system fonts and no dependencies or analytics. The board itself sets no cookies and uses no browser storage; GitHub hosting and service policies apply separately.
-- Reads only public issues from `IamMikeHelsel/drift-feedback` using GitHub’s unauthenticated REST API. No token is requested, stored or embedded.
-- Shows issues carrying `type:feature` or `type:bug`, excludes pull requests, and offers title/number search, status filtering, and vote/newest/status sorting.
-- Fetches at most four pages of 100 public issue records, newest-created first. Pull requests also consume records in this API response, even though the board excludes them. Search and vote sorting apply only to loaded requests. A visible notice explains truncation, partial results, API limits or failures and links to GitHub.
-- Renders API text with DOM text nodes and validates every issue link against this exact repository and a positive numeric issue number. It does not interpret issue HTML or Markdown.
-- Uses explicit status labels. Only a closed issue with the sole explicit `status:shipped` label is shown as **Shipped**. Closed issues without that status appear as **Closed** (or **Not planned** when explicitly labelled). Missing or conflicting statuses on open issues appear as **Not categorized**. An open issue labelled shipped is also not categorized until corrected.
+If something is broken or missing for everyone, open a [bug report](https://github.com/IamMikeHelsel/drift-cast/issues/new?template=bug-report.yml) or a [feature request](https://github.com/IamMikeHelsel/drift-cast/issues/new?template=feature-request.yml) here. Add a 👍 to the first post of an existing request when it describes your need. Votes help set priorities. They don't guarantee a feature or a date.
 
-Statuses are manually curated by the maintainer. “Planned” expresses current intent, not a delivery promise. Votes inform decisions and do not guarantee a feature or schedule. No private backlog is copied or synchronized here.
+**Everything posted here is public**, including issue text, comments, names and reactions. Leave out personal information, account details, private feed addresses, recordings and credentials.
 
-## Files and local checks
+## About this repository
 
-`index.html` provides the page, `styles.css` the responsive appearance, and `board.mjs` the public API reader and safe renderer. `tests/board.test.mjs` exercises classification, links, text rendering, filtering and request limits. `.github/ISSUE_TEMPLATE/` holds the feature form and support routing. `.nojekyll` selects plain static Pages delivery. All test fixtures are synthetic and never submitted to GitHub. [ADMIN.md](ADMIN.md) describes setup and manual curation.
+This is drift's public home: the roadmap, public bug reports and feature requests, and the [feedback board](https://iammikehelsel.github.io/drift-cast/) that lists them. **The app's source code is private and is not published here.** Nothing in this repository is copied or synced from the private codebase or its backlog.
 
-```sh
-node --test tests/board.test.mjs
-python3 -m http.server 8000 --bind 127.0.0.1
-```
+| File | Purpose |
+| --- | --- |
+| [ROADMAP.md](ROADMAP.md) | Public direction, with no promised dates |
+| [SUPPORT.md](SUPPORT.md) | Where to go for private help, bugs and ideas |
+| [SECURITY.md](SECURITY.md) | How to report a security or privacy problem privately |
+| [ADMIN.md](ADMIN.md) | Maintainer guide: labels, curation and how the board works |
+| [index.html](index.html), [board.mjs](board.mjs), [styles.css](styles.css) | The static feedback board served by GitHub Pages |
+| [tests/board.test.mjs](tests/board.test.mjs) | Board tests with synthetic data |
+| [.github/ISSUE_TEMPLATE](.github/ISSUE_TEMPLATE) | Bug and feature forms, plus routing for private help |
 
-Open `http://127.0.0.1:8000` to preview. The board queries its intended public GitHub repository; before publication it will correctly show an unavailable state. No example requests are inserted into the board or repository.
+This repository was previously named `drift-feedback`. GitHub redirects the old repository links here.
+
+© 2026 Lab44. drift and its artwork are not licensed for reuse. The board's code is shared for transparency.
